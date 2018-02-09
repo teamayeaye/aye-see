@@ -10,6 +10,8 @@ const multer = require('multer');
 const io = require('socket.io')(server);
 const port = process.env.PORT || 3000;
 
+const postController = require('./controllers/postController');
+
 server.listen(port, function () {
   console.log(`Server listening at port ${port}`);
 });
