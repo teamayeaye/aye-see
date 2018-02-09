@@ -21,8 +21,10 @@
   "homepage": "https://github.com/JamesThomasEdwards/aye-see#readme",
   "dependencies": {
     "express": "^4.16.2",
+    "mysql": "^2.15.0",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "sqlstring": "^2.3.0"
   },
   "devDependencies": {
     "babel": "^6.23.0",
