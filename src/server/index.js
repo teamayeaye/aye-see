@@ -1,19 +1,17 @@
-// Set up express server with socket.io
-
+// Set up express server
 const express = require('express');
 const app = express();
 const path = require('path');
 const server = require('http').createServer(app);
-const fs = require('fs');
 
 const multer = require('multer');
 
+// socket.io
 const io = require('socket.io')(server);
 const port = process.env.PORT || 3000;
 
-
 server.listen(port, function () {
-  console.log('Server listening at port %d', port);
+  console.log(`Server listening at port ${port}`);
 });
 
 // Routing
@@ -44,8 +42,6 @@ app.post('/newPost', upload.single('photo'), function (req, res, next) {
 });
 
 
-
-
 io.on('connection', function(socket) {
   socket.on('new post', function(data) {
   //if ANY client sends a new post, they should probably emit a 'new post' event.
@@ -55,5 +51,3 @@ io.on('connection', function(socket) {
 
   })
 });
-
-// app.listen(PORT); //listens on port 3000 -> http://localhost:3000/
