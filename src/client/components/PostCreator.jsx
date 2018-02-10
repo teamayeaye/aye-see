@@ -12,14 +12,38 @@ const PostCreator = (props) => (
         floatingLabelText="title"
         id="titleInput"
         autoFocus={true} />
+      <TextField
+        floatingLabelText="url"
+        id="linkInput" />
       <RaisedButton
-        containerElement='label' // <-- Just add me!
+        containerElement='label'
         label='Choose Image'>
-        <input type="file" style={{ display: 'none', margin:15 }} />
+        <input type="file" id='imageInput' style={{ display: 'none', margin:15 }} />
       </RaisedButton>
     </div>
     <div>
-      <RaisedButton id="postSubmitButton" onClick={props.submitPost} label="Submit Post" primary={true} style={{ margin: 11 }} />
+      <RaisedButton
+        id="postSubmitButton"
+        onClick={() => {
+          console.log(document.getElementById('imageInput').files[0]);
+          let data = new FormData();
+          data.set('user_id', 1);
+          data.set('title', document.getElementById('titleInput').value);
+          data.set('link', document.getElementById('linkInput').value);
+          data.set('photo', document.getElementById('imageInput').files[0]);
+          console.log(data);
+          props.submitPost(data);
+        }}
+        
+        // props.submitPost(new FormData().set({
+        //   user_id: 1,
+        //   title: document.getElementById('titleInput').value,
+        //   link: document.getElementById('linkInput').value,
+        //   img: document.getElementById('imageInput').files
+        // }))}
+        label="Submit Post"
+        primary={true}
+        style={{ margin: 11 }} />
     </div>
   </div >
 );
