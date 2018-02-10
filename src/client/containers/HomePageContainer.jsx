@@ -25,15 +25,14 @@ class HomePageContainer extends Component {
     //     console.log('gonna route you to post ' + post_id);
     // }
 
-    submitPost(){
+    submitPost(data){
         fetch('/newPost', {
             method: 'POST',
-            body: JSON.stringify(data),
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            })
-        }).then(res => res.json())
-        .then((res) => this.props.renderPosts(res));
+            body: data
+        })
+        .then(res => res.json())
+        .then(console.log(res))
+        // .then((res) => this.props.renderPosts(res));
     }
 
     render() {
@@ -43,10 +42,10 @@ class HomePageContainer extends Component {
                 <ImageGrid
                     postList={this.state.postList}
                     renderPosts={this.renderPosts}
-                    submtiPost={this.submitPost}
                 // routeToPost={this.routeToPost}
                 />
-                <PostCreator />
+                <PostCreator
+                    submitPost={this.submitPost} />
             </div>
         );
     }
