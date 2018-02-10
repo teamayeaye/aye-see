@@ -4,26 +4,24 @@ const app = express();
 const path = require('path');
 const server = require('http').createServer(app);
 
+// Multer parses multipart form data
 const multer = require('multer');
 
-// socket.io
+// Socket.io
 const io = require('socket.io')(server);
 const port = process.env.PORT || 3000;
 
+// Controllers
 const postController = require('./controllers/postController');
 const commentController = require('./controllers/commentController');
 
+// Start Server
 server.listen(port, function () {
   console.log(`Server listening at port ${port}`);
 });
 
-// Routing
-
 // Serve all static files (index.html, image files, etc) from the root directory.
 app.use(express.static(__dirname + './../../'));
-
-
-// Create New Post (with image)
 
 // This "storage" definition is only necessary so that we can append the extension to the filename.
 const storage = multer.diskStorage({
@@ -36,30 +34,48 @@ const storage = multer.diskStorage({
   }
 });
 const upload = multer({ storage });
-  // save the contents of req.body to the db
-  // send a response so that the client can re-render the page
-  // send the filename back so they can ask for it later.
-  // if the client wants to access the file, they just navigate to '/uploads/:filename'
+// if the client wants to access the file, they just navigate to '/uploads/:filename'
+
+
+
+// ROUTES
+
+// Create New Post (with image)
 app.post('/newPost',
   upload.single('photo'),
+  postController.create,
   function(req, res, next) {
-    res.status(200).send(req.file.filename);
+    res.status(200).send(req.file.filename); // Send the new filename back to the client
   }
 );
 
+
+// Get all posts (to render on the homepage)
+app.get('/getAllPosts',
+  postController.read
+)
+
+
+// Comment on a Post (with image)
 app.post('/newComment',
   upload.single('photo'),
   commentController.add
 );
 
+
+// Get all comments on a particular post
+// note: we can change this to '/getAllComments', with the post_id sent in the body of the req
 app.get('/:post_id',
   commentController.getAllComments
 )
 
+
 io.on('connection', function(socket) {
   socket.on('new post', function(data) {
-  //if ANY client sends a new post, they should probably emit a 'new post' event.
-    // First, update the db, then...
-    // send the 'new post' event back to the client
-  })
+  // listen for 'new post' from any client, then emit 'new post' to all subscribing clients so that they can append the new posts to the dom.
+  });
+
+  socket.on('new comment', function(data) {
+
+  });
 });
