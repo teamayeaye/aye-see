@@ -9,27 +9,51 @@ import StoryCommentPageContainer from '../containers/StoryCommentPageContainer.j
 import StoryHeader from './StoryHeader.jsx';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  return <Route render={ props => {
+    
+    if (props.isLoggedIn) return <Component {...props} />;
+
+    return (<Redirect to={{
+            pathname: '/',
+            state: { from: props.location }
+          }}
+        />);
+      }
+      } />;
+};  
+
 class App extends Component {
-    constructor() {
-        super();
-        this.state = {
-        }
-
+  constructor() {
+    super();
+    this.state = {
+      isLoggedIn: false,
+      userId: null
     }
-    render() {
-        return (
-            <Router>
-                <MuiThemeProvider>
-                    <Route exact path="/" component={LoginDisplay} />
-                    <Route path="/signup" component={SignupDisplay} />
-                    <Route path="/home" component={HomePageContainer} />
-                    <Route path="/commentFeed/:post_id" component={StoryCommentPageContainer} />
-                </MuiThemeProvider>
+    this.handleAuthentication = this.handleAuthentication.bind(this);
+  }
 
-            </Router>
+  handleAuthentication(userId) {
+    this.setState({
+      userId,
+      isLoggedIn: true
+    });
+  }
 
-        )
-    }
+  render() {
+    return (
+        <Router>
+            <MuiThemeProvider>
+                <Route exact path="/" component={LoginDisplay} handleAuthentication={this.handleAuthentication} />
+                <Route path="/signup" component={SignupDisplay} />
+                <PrivateRoute path="/home" component={HomePageContainer} isLoggedIn = {this.state.isLoggedIn} />
+                <PrivateRoute path="/commentFeed/:post_id" component={StoryCommentPageContainer} />
+            </MuiThemeProvider>
+
+        </Router>
+
+    )
+  }
 }
 
 export default App;
