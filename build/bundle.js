@@ -5476,6 +5476,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -5496,6 +5498,12 @@ var _starBorder2 = _interopRequireDefault(_starBorder);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 // import HomePageContainer from './HomePageContainer.jsx';
 
 var styles = {
@@ -5511,82 +5519,118 @@ var styles = {
     }
 };
 
-var tilesData = [{
-    img: 'images/grid-list/00-52-29-429_640.jpg',
-    title: 'Breakfast',
-    author: 'jill111'
-}, {
-    img: 'images/grid-list/burger-827309_640.jpg',
-    title: 'Tasty burger',
-    author: 'pashminu'
-}, {
-    img: 'images/grid-list/camera-813814_640.jpg',
-    title: 'Camera',
-    author: 'Danson67'
-}, {
-    img: 'images/grid-list/morning-819362_640.jpg',
-    title: 'Morning',
-    author: 'fancycrave1'
-}, {
-    img: 'images/grid-list/hats-829509_640.jpg',
-    title: 'Hats',
-    author: 'Hans'
-}, {
-    img: 'images/grid-list/honey-823614_640.jpg',
-    title: 'Honey',
-    author: 'fancycravel'
-}, {
-    img: 'images/grid-list/vegetables-790022_640.jpg',
-    title: 'Vegetables',
-    author: 'jill111'
-}, {
-    img: 'images/grid-list/water-plant-821293_640.jpg',
-    title: 'Water plant',
-    author: 'BkrmadtyaKarki'
-}];
-var ImageGrid = function ImageGrid() {
-    return _react2.default.createElement(
-        'div',
-        { style: styles.root },
-        _react2.default.createElement(
-            _GridList.GridList,
-            {
-                cellHeight: 180,
-                style: styles.gridList, cols: '3'
-            },
-            _react2.default.createElement(
-                _Subheader2.default,
-                null,
-                'Stories'
-            ),
-            tilesData.map(function (tile) {
-                return _react2.default.createElement(
-                    _GridList.GridTile,
+// const tilesData = [
+//     {
+//         img: 'images/grid-list/00-52-29-429_640.jpg',
+//         title: 'Breakfast',
+//         author: 'jill111',
+//     },
+//     {
+//         img: 'images/grid-list/burger-827309_640.jpg',
+//         title: 'Tasty burger',
+//         author: 'pashminu',
+//     },
+//     {
+//         img: 'images/grid-list/camera-813814_640.jpg',
+//         title: 'Camera',
+//         author: 'Danson67',
+//     },
+//     {
+//         img: 'images/grid-list/morning-819362_640.jpg',
+//         title: 'Morning',
+//         author: 'fancycrave1',
+//     },
+//     {
+//         img: 'images/grid-list/hats-829509_640.jpg',
+//         title: 'Hats',
+//         author: 'Hans',
+//     },
+//     {
+//         img: 'images/grid-list/honey-823614_640.jpg',
+//         title: 'Honey',
+//         author: 'fancycravel',
+//     },
+//     {
+//         img: 'images/grid-list/vegetables-790022_640.jpg',
+//         title: 'Vegetables',
+//         author: 'jill111',
+//     },
+//     {
+//         img: 'images/grid-list/water-plant-821293_640.jpg',
+//         title: 'Water plant',
+//         author: 'BkrmadtyaKarki',
+//     },
+// ];
+
+var ImageGrid = function (_Component) {
+    _inherits(ImageGrid, _Component);
+
+    function ImageGrid(props) {
+        _classCallCheck(this, ImageGrid);
+
+        return _possibleConstructorReturn(this, (ImageGrid.__proto__ || Object.getPrototypeOf(ImageGrid)).call(this, props));
+    }
+
+    _createClass(ImageGrid, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            if (this.props.postList.length === 0) {
+                fetch('/getAllPosts').then(function (res) {
+                    return res.json();
+                }).then(function (res) {
+                    return console.log(res);
+                });
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { style: styles.root },
+                _react2.default.createElement(
+                    _GridList.GridList,
                     {
-                        key: tile.img,
-                        title: tile.title,
-                        subtitle: _react2.default.createElement(
-                            'span',
-                            null,
-                            'by ',
-                            _react2.default.createElement(
-                                'b',
-                                null,
-                                tile.author
-                            )
-                        ),
-                        actionIcon: _react2.default.createElement(
-                            _IconButton2.default,
-                            null,
-                            _react2.default.createElement(_starBorder2.default, { color: 'white' })
-                        )
+                        cellHeight: 180,
+                        style: styles.gridList, cols: '3'
                     },
-                    _react2.default.createElement('img', { src: tile.img })
-                );
-            })
-        )
-    );
-};
+                    _react2.default.createElement(
+                        _Subheader2.default,
+                        null,
+                        'Stories'
+                    ),
+                    this.props.postList.map(function (tile) {
+                        return _react2.default.createElement(
+                            _GridList.GridTile,
+                            {
+                                key: tile.img,
+                                title: tile.title,
+                                subtitle: _react2.default.createElement(
+                                    'span',
+                                    null,
+                                    'by ',
+                                    _react2.default.createElement(
+                                        'b',
+                                        null,
+                                        tile.author
+                                    )
+                                ),
+                                actionIcon: _react2.default.createElement(
+                                    _IconButton2.default,
+                                    null,
+                                    _react2.default.createElement(_starBorder2.default, { color: 'white' })
+                                )
+                            },
+                            _react2.default.createElement('img', { src: tile.img })
+                        );
+                    })
+                )
+            );
+        }
+    }]);
+
+    return ImageGrid;
+}(_react.Component);
 
 exports.default = ImageGrid;
 
@@ -28838,6 +28882,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
@@ -28852,14 +28898,44 @@ var _NavBar2 = _interopRequireDefault(_NavBar);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var HomePageContainer = function HomePageContainer(props) {
-    return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(_NavBar2.default, null),
-        _react2.default.createElement(_ImageGrid2.default, null)
-    );
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var HomePageContainer = function (_Component) {
+    _inherits(HomePageContainer, _Component);
+
+    function HomePageContainer() {
+        _classCallCheck(this, HomePageContainer);
+
+        var _this = _possibleConstructorReturn(this, (HomePageContainer.__proto__ || Object.getPrototypeOf(HomePageContainer)).call(this));
+
+        _this.state = {};
+        _this.state.postList = [];
+
+        _this.renderPosts = _this.renderPosts.bind(_this);
+        return _this;
+    }
+
+    _createClass(HomePageContainer, [{
+        key: 'renderPosts',
+        value: function renderPosts() {}
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(_NavBar2.default, null),
+                _react2.default.createElement(_ImageGrid2.default, { postList: this.state.postList })
+            );
+        }
+    }]);
+
+    return HomePageContainer;
+}(_react.Component);
 
 exports.default = HomePageContainer;
 

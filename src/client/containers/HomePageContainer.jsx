@@ -11,8 +11,10 @@ class HomePageContainer extends Component {
         this.renderPosts = this.renderPosts.bind(this);
     };
 
-    renderPosts() {
-        
+    renderPosts(data) {
+        const stateCopy = {};
+        stateCopy.postList = data;
+        this.setState({ postList: stateCopy.postList });
     }
 
 
@@ -20,7 +22,9 @@ class HomePageContainer extends Component {
         return (
             <div>
                 <NavBar />
-                <ImageGrid postList={this.state.postList} />
+                <ImageGrid
+                    postList={this.state.postList}
+                    renderPosts={this.renderPosts} />
             </div>
         );
     }
