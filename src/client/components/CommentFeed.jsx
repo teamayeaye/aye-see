@@ -5,7 +5,7 @@ const Comment = (props) => {
   console.log('comment daty',props.datum)
   return (
     <Paper>
-      <img src={`uploads/${props.datum.img}`} style={{height:100}}/>
+      <img src={props.datum.img} style={{height:100}}/>
       {
         props.datum.caption
       }
