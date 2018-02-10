@@ -43,10 +43,12 @@ const upload = multer({ storage });
 
 // ROUTES
 
+// Creates a new user in database
 app.post('/signup', userController.createUser, (req, res) => {
   return res.status(200).send(res.locals.userId);
 });
 
+// Verifies credentials for user login
 app.post('/login', userController.verifyUser, (req, res) => {
   return res.status(200).send(res.locals.userId);
 });
