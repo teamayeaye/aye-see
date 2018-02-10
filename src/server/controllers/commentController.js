@@ -9,6 +9,7 @@ module.exports = {
     const user_id = req.body.user_id;
     const img = req.file.filename;
     const caption = req.body.caption;
+<<<<<<< HEAD
     sql.query(
       sqlstring.format(
         `INSERT INTO comments (post_id, user_id, img, caption) VALUES (?,?,?,?)`,
@@ -31,5 +32,21 @@ module.exports = {
         if (results) return res.send(results);
       }
     );
+=======
+    sql.query(sqlstring.format('INSERT INTO comments (post_id, user_id, img, caption) VALUES (?,?,?,?)', [post_id, user_id, img, caption]), (err, result) => {
+      if (err) return res.status(400).send(err);
+      if (result) return res.send(result); //the id of the comment is stored in result.insertId
+      // we probably also want to send the image name, so that the client can display the image.
+    });
+  },
+
+  getAllComments : function(req,res,next){
+    const post_id = req.params.post_id;
+    // const post_id = req.body.post_id;
+    sql.query(sqlstring.format('SELECT * FROM comments WHERE post_id=?',[post_id]), function (err, results, fields) {
+      if (err) return res.status(400).send(err);
+      if (results) return res.send(results);
+    });
+>>>>>>> 0639ea9dfef4a707725dfeecb5560b9d950e47da
   }
 };

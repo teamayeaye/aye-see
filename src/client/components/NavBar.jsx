@@ -4,6 +4,8 @@ import IconButton from 'material-ui/IconButton';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import FlatButton from 'material-ui/FlatButton';
 import HomeIcon from './HomeIcon.jsx'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+// import HomePageContainer from './HomePageContainer.jsx';
 
 function handleClick() {
     alert('onClick triggered on the title component');
@@ -21,10 +23,9 @@ const styles = {
  */
 const NavBar = () => (
     <AppBar
-        title={<span style={styles.title}>Welcome username!</span>}
-        onTitleClick={handleClick}
+        title={<Link to="commentfeed"> <span style={styles.title}>Welcome username!</span></Link>}
         iconElementLeft={<HomeIcon><NavigationClose /></HomeIcon>}
-        iconElementRight={<FlatButton label="Logout" />}
+        iconElementRight={<Link to="/"><FlatButton label="Logout" /></Link>}
     />
 );
 

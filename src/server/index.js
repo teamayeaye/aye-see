@@ -67,6 +67,7 @@ app.get('/getAllPosts', postController.read);
 app.post('/newComment', upload.single('photo'), commentController.add);
 
 // Get all comments on a particular post
+// note: we can change this to '/getAllComments', with the post_id sent in the body of the req
 app.get('/:post_id', commentController.getAllComments);
 
 io.on('connection', function(socket) {
