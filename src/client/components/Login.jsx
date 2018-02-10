@@ -20,9 +20,9 @@ class Login extends Component {
     .then(res => res.json())
     .then(response => {
       console.log('RESPONSE', response);
-      // if (response !== 'Invalid credentials') {
-      this.props.handleAuthentication(response);
-      // }
+      if (response !== 'Invalid credentials') {
+        this.props.handleAuthentication(response);
+      }
     });
   }
 
