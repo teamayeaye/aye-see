@@ -4,7 +4,7 @@ let sqlstring = require('sqlstring');
 
 
 module.exports = {
-  add: function (req, res, next) {
+  add : function (req, res, next) {
     // add post_id, user_id, img (name as stored on server), caption. created_at will default to current time.
     const post_id = req.body.post_id;
     const user_id = req.body.user_id;
