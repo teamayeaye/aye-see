@@ -23,7 +23,7 @@ class App extends Component {
                     <Route exact path="/" component={LoginDisplay} />
                     <Route path="/signup" component={SignupDisplay} />
                     <Route path="/home" component={HomePageContainer} />
-                    <Route path="/commentfeed" component={StoryCommentPageContainer} />
+                    <Route path="/commentFeed/:post_id" component={StoryCommentPageContainer} />
                 </MuiThemeProvider>
 
             </Router>
