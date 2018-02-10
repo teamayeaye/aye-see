@@ -26,7 +26,8 @@ class ImageGrid extends Component {
 
     componentDidMount(){
         if (this.props.postList.length === 0) {
-            fetch('/getAllPosts').then(res => res.json())
+            fetch('/getAllPosts')
+            .then(res => res.json())
             .then((res) => this.props.renderPosts(res));
         }
     }
