@@ -11,7 +11,7 @@ userController.createUser = (req, res, next) => {
   const hashedPassword = bcrypt.hashSync(req.body.password, SALT_WORK_FACTOR);
   sql.query(
     sqlstring.format(`INSERT INTO user (email, username, password) 
-    VALUES (${req.body.email}, ${req.body.password}, ${hashedPassword})`),
+    VALUES (${req.body.email}, ${req.body.username}, ${hashedPassword})`),
     (err, results, fields) => {
       if (err) return res.status(400).send(err);
       else {
