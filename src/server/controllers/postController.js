@@ -13,9 +13,7 @@ module.exports = {
   },
   
   read : function(req,res,next){
-    const { user_id } = req.body;
-    
-    sql.query(sanatize.format('SELECT id,username,email FROM user WHERE id=?',[user_id]), function (err, results, fields) {
+    sql.query(sanatize.format('SELECT * FROM post'), function (err, results, fields) {
       if (err) res.send(err);
       res.send(results);
     });
