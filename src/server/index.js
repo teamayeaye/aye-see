@@ -66,6 +66,9 @@ app.post('/newPost', upload.single('photo'), postController.create, function(
 // Get all posts (to render on the homepage)
 app.get('/getAllPosts', postController.read);
 
+// Get specific post
+app.get('/post/:id', postController.readOne);
+
 // Comment on a Post (with image)
 app.post('/newComment', upload.single('photo'), commentController.add);
 
