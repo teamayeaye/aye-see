@@ -10,6 +10,9 @@ const multer = require('multer');
 const io = require('socket.io')(server);
 const port = process.env.PORT || 3000;
 
+const postController = require('./controllers/postController');
+const commentController = require('./controllers/commentController');
+
 server.listen(port, function () {
   console.log(`Server listening at port ${port}`);
 });
@@ -33,21 +36,30 @@ const storage = multer.diskStorage({
   }
 });
 const upload = multer({ storage });
-app.post('/newPost', upload.single('photo'), function (req, res, next) {
   // save the contents of req.body to the db
   // send a response so that the client can re-render the page
   // send the filename back so they can ask for it later.
   // if the client wants to access the file, they just navigate to '/uploads/:filename'
-  res.status(200).send(req.file.filename);
-});
+app.post('/newPost',
+  upload.single('photo'),
+  function(req, res, next) {
+    res.status(200).send(req.file.filename);
+  }
+);
 
+app.post('/newComment',
+  upload.single('photo'),
+  commentController.add
+);
+
+app.get('/:post_id',
+  commentController.getAllComments
+)
 
 io.on('connection', function(socket) {
   socket.on('new post', function(data) {
   //if ANY client sends a new post, they should probably emit a 'new post' event.
-  
     // First, update the db, then...
     // send the 'new post' event back to the client
-
   })
 });
