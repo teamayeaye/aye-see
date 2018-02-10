@@ -3,7 +3,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
-const SignupDisplay = (props) => {
+const Signup = (props) => {
     return (
         <div id='signupContainer'>
             <h2>Sign up</h2>
@@ -31,4 +31,4 @@ const SignupDisplay = (props) => {
         </div>
     )
 }
-export default SignupDisplay
+export default Signup
