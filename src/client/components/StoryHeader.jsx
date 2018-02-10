@@ -2,19 +2,19 @@ import React from 'react';
 import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
-const StoryHeader = () => (
+const StoryHeader = (props) => (
     <Card>
         <CardHeader
-            title="URL Avatar"
+          title={`User:${props.post.user_id}`}
             subtitle="Subtitle"
             avatar="images/jsa-128.jpg"
         />
         <CardMedia
-            overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
+          overlay={<CardTitle title={props.post.title} subtitle="Overlay subtitle" />}
         >
-            <img src="https://i.pinimg.com/736x/ce/80/cb/ce80cbc0cba87cf4b4e7c15b055b3bc4--shih-tzu-puppy-shihtzu.jpg" alt="" />
+          <img src={props.post.img} alt="" />
         </CardMedia>
-        <CardTitle title="Card title" subtitle="Card subtitle" />
+        <CardTitle title={props.post.title} subtitle="Card subtitle" />
         <CardText>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit.
       Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
