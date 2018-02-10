@@ -27,6 +27,7 @@ server.listen(port, function() {
 
 // Serve all static files (index.html, image files, etc) from the root directory.
 app.use(express.static(__dirname + './../../'));
+app.use(express.static(__dirname + './../../uploads'));
 
 // This "storage" definition is only necessary so that we can append the extension to the filename.
 const storage = multer.diskStorage({
@@ -45,12 +46,12 @@ const upload = multer({ storage });
 
 // Creates a new user in database
 app.post('/signup', userController.createUser, (req, res) => {
-  return res.status(200).send(res.locals.userId);
+  return res.status(200).send(res.locals.userId.toString());
 });
 
 // Verifies credentials for user login
 app.post('/login', userController.verifyUser, (req, res) => {
-  return res.status(200).send(res.locals.userId);
+  return res.status(200).send(res.locals.userId.toString());
 });
 
 // Create New Post (with image)
