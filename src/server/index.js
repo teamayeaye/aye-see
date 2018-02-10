@@ -3,43 +3,30 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const server = require('http').createServer(app);
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const multer = require('multer');
 
-// socket.io
+// Multer parses multipart form data
+const multer = require('multer');
+const bodyParser = require('body-parser');
+
+// Socket.io
 const io = require('socket.io')(server);
 const port = process.env.PORT || 3000;
 
+// Controllers
 const userController = require('./controllers/userController');
-const cookieController = require('./controllers/cookieController');
-const postController = require('./controllers/sessionController');
 const postController = require('./controllers/postController');
 const commentController = require('./controllers/commentController');
 
-// Enable access to http request body and cookies
+// Use body parser
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
 
+// Start Server
 server.listen(port, function() {
   console.log(`Server listening at port ${port}`);
 });
 
-// Routing
-
 // Serve all static files (index.html, image files, etc) from the root directory.
 app.use(express.static(__dirname + './../../'));
-
-// New user signup
-app.post('/signup', userController.createUser, (req, res, next) => {
-  res.status(201).end(); // Is anything else needed in response?
-});
-
-// User login
-app.post('/login', userController.verifyUser, function(req, res, next) {
-  res.redirect('/secret');
-});
-// Create New Post (with image)
 
 // This "storage" definition is only necessary so that we can append the extension to the filename.
 const storage = multer.diskStorage({
@@ -52,22 +39,40 @@ const storage = multer.diskStorage({
   }
 });
 const upload = multer({ storage });
-// save the contents of req.body to the db
-// send a response so that the client can re-render the page
-// send the filename back so they can ask for it later.
 // if the client wants to access the file, they just navigate to '/uploads/:filename'
-app.post('/newPost', upload.single('photo'), function(req, res, next) {
-  res.status(200).send(req.file.filename);
+
+// ROUTES
+
+app.post('/signup', userController.createUser, (req, res) => {
+  return res.status(200).send(res.locals.userId);
 });
 
+app.post('/login', userController.verifyUser, (req, res) => {
+  return res.status(200).send(res.locals.userId);
+});
+
+// Create New Post (with image)
+app.post('/newPost', upload.single('photo'), postController.create, function(
+  req,
+  res,
+  next
+) {
+  res.status(200).send(req.file.filename); // Send the new filename back to the client
+});
+
+// Get all posts (to render on the homepage)
+app.get('/getAllPosts', postController.read);
+
+// Comment on a Post (with image)
 app.post('/newComment', upload.single('photo'), commentController.add);
 
+// Get all comments on a particular post
 app.get('/:post_id', commentController.getAllComments);
 
 io.on('connection', function(socket) {
   socket.on('new post', function(data) {
-    //if ANY client sends a new post, they should probably emit a 'new post' event.
-    // First, update the db, then...
-    // send the 'new post' event back to the client
+    // listen for 'new post' from any client, then emit 'new post' to all subscribing clients so that they can append the new posts to the dom.
   });
+
+  socket.on('new comment', function(data) {});
 });
