@@ -17,7 +17,6 @@ class HomePageContainer extends Component {
     renderPosts(data) {
         const stateCopy = {};
         stateCopy.postList = data;
-        console.log(data);
         this.setState({ postList: stateCopy.postList });
     }
 
@@ -31,8 +30,7 @@ class HomePageContainer extends Component {
             body: data
         })
         .then(res => res.json())
-        .then(console.log(res))
-        // .then((res) => this.props.renderPosts(res));
+        .then((res) => this.renderPosts(res));
     }
 
     render() {

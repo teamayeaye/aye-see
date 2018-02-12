@@ -55,18 +55,12 @@ app.post('/login', userController.verifyUser, (req, res) => {
 });
 
 // Create New Post (with image)
-app.post('/newPost', upload.single('photo'), postController.create, function(
-  req,
-  res,
-  next
-) {
-  res.status(200).send(req.file.filename); // Send the new filename back to the client
-});
+app.post('/newPost', upload.single('photo'), postController.create, postController.read);
 
 // Get all posts (to render on the homepage)
 app.get('/getAllPosts', postController.read);
 
-// Get specific post
+// Get specific posts
 app.get('/post/:id', postController.readOne);
 
 // Comment on a Post (with image)

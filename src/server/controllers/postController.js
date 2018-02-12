@@ -11,8 +11,7 @@ module.exports = {
       ),
       function(err, results, fields) {
         if (err) res.send(err);
-        console.log(fields);
-        res.send(results);
+        next();
       }
     );
   },
@@ -26,7 +25,7 @@ module.exports = {
       if (err) {
         return res.send(err);
       }
-      res.send(results);
+      res.json(results);
     });
   },
 
