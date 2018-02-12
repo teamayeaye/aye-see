@@ -33,24 +33,22 @@ class ImageGrid extends Component {
     }
 
     render() {
+        let postArr = this.props.postList.map((post, index) => (
+            <Link to={'/commentfeed/'+post.post_id}><GridTile
+                key={index}
+                title={post.title}
+                post_id={post.post_id}>
+                <img src={post.img} />
+            </GridTile></Link>
+        ))
+        
         return (
             <div style={styles.root}>
                 <GridList
                     cellHeight={180}
-                    style={styles.gridList} cols={3}
-                >
+                    style={styles.gridList} cols={Number(3)}>
                     <Subheader>Stories</Subheader>
-                    {this.props.postList.map((post) => (
-                        <Link to={'/commentfeed/'+post.post_id}><GridTile
-                            key={post.created_at}
-                            title={post.title}
-                            post_id={post.post_id}
-                            // actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-                            // onClick={() => this.props.routeToPost(post.post_id)}
-                        >
-                            <img src={post.img} />
-                        </GridTile></Link>
-                    ))}
+                   {postArr}
                 </GridList>
             </div>
         );

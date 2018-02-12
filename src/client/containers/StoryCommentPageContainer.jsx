@@ -8,17 +8,19 @@ export default class StoryCommentPageContainer extends Component{
   //can;t super props here for some reason
   constructor(props){
     super()
-    this.state = {comments:[], post:null, post_id:props.match.params.post_id}
+    this.state = {comments:[], post:null, post_id:parseInt(props.match.params.post_id)}
+    console.log(props.match.params.post_id);
   }
 
   componentDidMount(){
-    fetch(this.state.post_id).then(res => res.json())
+    fetch(`/${this.state.post_id}`).then(res => res.json())
       .then(data => {
         this.setState({comments:data})
       })
 
     fetch(`/post/${this.state.post_id}`).then(res => res.json())
       .then(data => {
+        console.log('hemmo',data)
         this.setState({post:data})
       })
   }

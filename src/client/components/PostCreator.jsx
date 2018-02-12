@@ -25,13 +25,11 @@ const PostCreator = (props) => (
       <RaisedButton
         id="postSubmitButton"
         onClick={() => {
-          console.log(document.getElementById('imageInput').files[0]);
           let data = new FormData();
           data.set('user_id', 1);
           data.set('title', document.getElementById('titleInput').value);
           data.set('link', document.getElementById('linkInput').value);
           data.set('photo', document.getElementById('imageInput').files[0]);
-          console.log(data);
           props.submitPost(data);
         }}
         
