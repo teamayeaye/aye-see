@@ -4,8 +4,8 @@ import NavBar from '../components/NavBar.jsx';
 import PostCreator from '../components/PostCreator.jsx';
 
 class HomePageContainer extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {};
         this.state.postList = [];
 

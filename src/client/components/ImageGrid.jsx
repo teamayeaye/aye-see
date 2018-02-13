@@ -21,18 +21,24 @@ const styles = {
 
 class ImageGrid extends Component {
     constructor(props){
+
         super(props);
     }
 
     componentDidMount(){
         if (this.props.postList.length === 0) {
+            console.log('Comp did mount, imagegrid');
             fetch('/getAllPosts')
             .then(res => res.json())
             .then((res) => this.props.renderPosts(res));
+            // .catch((res) => )
         }
     }
 
     render() {
+
+        console.log(this.props);
+
         let postArr = this.props.postList.map((post, index) => (
             <Link to={'/commentfeed/'+post.post_id}><GridTile
                 key={index}
@@ -46,7 +52,7 @@ class ImageGrid extends Component {
             <div style={styles.root}>
                 <GridList
                     cellHeight={180}
-                    style={styles.gridList} cols={Number(3)}>
+                    style={styles.gridList}>
                     <Subheader>Stories</Subheader>
                    {postArr}
                 </GridList>
