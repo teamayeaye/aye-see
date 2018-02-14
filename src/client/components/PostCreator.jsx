@@ -26,19 +26,13 @@ const PostCreator = (props) => (
         id="postSubmitButton"
         onClick={() => {
           let data = new FormData();
-          data.set('user_id', 1);
-          data.set('title', document.getElementById('titleInput').value);
-          data.set('link', document.getElementById('linkInput').value);
-          data.set('photo', document.getElementById('imageInput').files[0]);
+          data.append('user_id', 9);
+          data.append('title', document.getElementById('titleInput').value);
+          data.append('link', document.getElementById('linkInput').value);
+          data.append('photo', document.getElementById('imageInput').files[0]);
           props.submitPost(data);
         }}
-        
-        // props.submitPost(new FormData().set({
-        //   user_id: 1,
-        //   title: document.getElementById('titleInput').value,
-        //   link: document.getElementById('linkInput').value,
-        //   img: document.getElementById('imageInput').files
-        // }))}
+
         label="Submit Post"
         primary={true}
         style={{ margin: 11 }} />

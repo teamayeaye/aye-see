@@ -23,7 +23,7 @@ const styles = {
  */
 const NavBar = () => (
     <AppBar
-        title={<Link to="commentfeed"> <span style={styles.title}>Welcome username!</span></Link>}
+        title={<Link to="commentfeed"> <span style={styles.title}>We're username!</span></Link>}
         iconElementLeft={<HomeIcon><NavigationClose /></HomeIcon>}
         iconElementRight={<Link to="/"><FlatButton label="Logout" /></Link>}
     />
