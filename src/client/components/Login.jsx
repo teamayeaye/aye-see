@@ -4,26 +4,19 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 class Login extends Component {
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
+
     this.pressLogin = this.pressLogin.bind(this);
   }
 
   pressLogin () {
-    fetch('/login', {
-      method: 'POST',
-      body: {
-        username: document.getElementById('loginUsernameInput').value,
-        password: document.getElementById('loginPasswordInput').value
-      }
-    })
-    .then(res => res.json())
-    .then(response => {
-      console.log('RESPONSE', response);
-      if (response !== 'Invalid credentials') {
-        this.props.handleAuthentication(response);
-      }
-    });
+    const data = {
+      username: document.getElementById('loginUsernameInput').value,
+      password: document.getElementById('loginPasswordInput').value
+    };
+
+    this.props.handleAuthentication(data);
   }
 
   render () {
@@ -38,7 +31,10 @@ class Login extends Component {
           />
         </div>
         <div>
-          <TextField floatingLabelText="password" id="loginPasswordInput" />
+          <TextField
+              floatingLabelText="password"
+              id="loginPasswordInput"
+          />
         </div>
         <div>
           <Link to="/home">
