@@ -29,19 +29,29 @@ We struggled with this function - it doesn't work yet */
 // };  
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       isLoggedIn: false,
       userId: null
-    }
+    };
     this.handleAuthentication = this.handleAuthentication.bind(this);
   }
 
-  handleAuthentication(userId) {
-    this.setState({
-      userId,
-      isLoggedIn: true
+  handleAuthentication(data) {
+    fetch('/login', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: { 'content-type': 'application/json' }
+    })
+    .then(res => res.json())
+    .then(res => {
+      if (res !== 'Invalid credentials') {
+        this.setState({
+          userId: res,
+          isLoggedIn: true
+        });
+      }
     });
   }
 
@@ -49,12 +59,11 @@ class App extends Component {
     return (
         <Router>
             <MuiThemeProvider>
-                <Route exact path="/" component={Login} handleAuthentication={this.handleAuthentication} />
+                <Route exact path="/" render={() => <Login handleAuthentication={this.handleAuthentication}/>} />
                 <Route path="/signup" component={Signup} />
-                <Route path="/home" component={HomePageContainer} isLoggedIn = {this.state.isLoggedIn} />
+                <Route path="/home" component={HomePageContainer} isLoggedIn={this.state.isLoggedIn} />
                 <Route path="/commentFeed/:post_id" component={StoryCommentPageContainer} />
             </MuiThemeProvider>
-
         </Router>
 
     )

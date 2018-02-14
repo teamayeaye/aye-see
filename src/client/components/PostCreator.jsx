@@ -32,13 +32,7 @@ const PostCreator = (props) => (
           data.append('photo', document.getElementById('imageInput').files[0]);
           props.submitPost(data);
         }}
-        
-        // props.submitPost(new FormData().set({
-        //   user_id: 1,
-        //   title: document.getElementById('titleInput').value,
-        //   link: document.getElementById('linkInput').value,
-        //   img: document.getElementById('imageInput').files
-        // }))}
+
         label="Submit Post"
         primary={true}
         style={{ margin: 11 }} />

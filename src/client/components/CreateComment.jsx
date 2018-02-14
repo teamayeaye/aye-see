@@ -5,24 +5,32 @@ import RaisedButton from 'material-ui/RaisedButton';
 
 export default class CreateComment extends Component{
   constructor(props){
-    super(props)
-    this.state = {caption:'',photo:null}
-    this.handleFileChange = this.handleFileChange.bind(this)
+    super(props);
+    this.state = {
+      caption: '',
+      photo: null
+    };
+
+    this.handleFileChange = this.handleFileChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCaption = this.handleCaption.bind(this);
   }
 
-  handleFileChange(file){
-    this.setState({photo:file[0]})
+  handleFileChange(e){
+    console.log('inside file change')
+
+    this.setState({ photo: e.target.files[0] })
   }
 
-  handleCaption(caption){
-    this.setState({caption:caption})
+  handleCaption(e){
+    this.setState({ caption: e.target.value });
   }
 
   handleSubmit(){
-    let formData = new FormData()
-    let post_body = Object.assign({}, this.props.dataInject, this.state)
+    console.log('handle submit')
+    let formData = new FormData();
+    let post_body = Object.assign({}, this.props.dataInject, this.state);
+
     for(let i in post_body){
       formData.append(i,post_body[i])
     }
@@ -30,8 +38,9 @@ export default class CreateComment extends Component{
     fetch('/newComment',{
       method: 'POST',
       body: formData
-    }).then(res => res.json())
-      .then(data => {console.log(data)})
+    })
+      .then(res => res.json())
+      .then(data => { console.log(data, 'data in submitsss') })
   }
   
 
@@ -41,15 +50,18 @@ export default class CreateComment extends Component{
       <Paper>
         <input
           type='file'
-          onChange={(e)=>{this.handleFileChange(e.target.files)}}
-          name='photo'/>
+          onChange={this.handleFileChange}
+          name='photo'
+        />
           <TextField
-            onChange={(e)=>{this.handleCaption(e.target.value)}}
-            floatingLabelText="Caption"/>
+            onChange={this.handleCaption}
+            floatingLabelText="Caption"
+          />
             <RaisedButton
               label='Submit'
               primary={true}
-              onClick={this.handleSubmit}/>
+              onClick={this.handleSubmit}
+            />
       </Paper>
     )
   }
